@@ -1,3 +1,4 @@
+Day 1
 what is cybersecurity:-its a  branch that secure and protect computer system from threats
 
 what is cybersecurity engineer:-specialist that design and implement plan that protect the system from fraud
@@ -5,3 +6,19 @@ what is cybersecurity engineer:-specialist that design and implement plan that p
 five types of cybersecurity:-cloud security,application security,network security,information security,endpoint security
 
 my reson to become cybersecurity engineer:-i have interest in ethical hacking,i enjoy solving such kind of things
+
+
+Day 2
+CID:-confidentiality,integrity,availability
+confidentiality:only authorized users can access the information
+encryption:-converting data to unreadable format
+integrity:data cannot be changed without permission
+integrity is maintained by hashing and digital signature
+hashing is just like digital fingerprint of file
+different hash means file is modified
+digital signature:its used to check who sent the file and whether it is changed or not
+Availability:authorised users can access the data when they need it
+availability is maintained by backup,redundant servers,DDoS protection
+in backup if one server fails then backup is used 
+in redundant there are multiple servers if one fails another works
+in DDoS fake traffic is created to make it unavailable
