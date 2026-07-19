@@ -22,3 +22,23 @@ availability is maintained by backup,redundant servers,DDoS protection
 in backup if one server fails then backup is used 
 in redundant there are multiple servers if one fails another works
 in DDoS fake traffic is created to make it unavailable
+
+
+
+Day 3
+Computer Network
+a group of computers to share information
+types of network are LAN ,MAN ,WAN
+LAN(local area network)
+it covers small area like a particular building
+MAN(metropolitan area network)
+it covers area like city
+WAN(wide area network)
+it covers wide area like world ex. internet
+
+Router:its a device that connects network and send information to correct destination and it decide where internet data should go
+Switch:connects the devices within a LAN
+modem:it converts the signals so device can communicate over ISP(internet service provider) signals
+
+IP(internet protocol) address:its a unique address of device connected to network
+MAC(media access control):its unique physical address given to device by manufacturer
