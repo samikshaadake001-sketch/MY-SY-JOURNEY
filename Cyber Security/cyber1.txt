@@ -42,3 +42,31 @@ modem:it converts the signals so device can communicate over ISP(internet servic
 
 IP(internet protocol) address:its a unique address of device connected to network
 MAC(media access control):its unique physical address given to device by manufacturer
+
+
+
+
+Day 4
+DNS(Domain name system):its just like phonebook of system
+ex.google.com=142.250.xxx.xxx
+When Google creates its servers, it is assigned IP addresses.
+Each server (or group of servers) has its own IP address
+
+HTTP:it sends plain text like sending letter without envelope
+port 80
+HTTPS:sending letter with envelope
+port 443
+The data is encrypted, so even if someone intercepts it, they shouldn't be able to understand its contents without the encryption keys.
+That lock means the website is using HTTPS, which relies on TLS (Transport Layer Security). TLS is the modern security protocol that encrypts communication. SSL (Secure Sockets Layer) is the older protocol that TLS replaced, but people still often say "SSL certificate" out of habit.
+
+ports:ip address tell the address of computer while port tell the address of particular server or application
+
+|      Port | Service | Purpose                |
+| --------: | ------- | ---------------------- |
+| **20/21** | FTP     | File Transfer          |
+|    **22** | SSH     | Secure Remote Login    |
+|    **25** | SMTP    | Sending Emails         |
+|    **53** | DNS     | Domain Name System     |
+|    **80** | HTTP    | Websites (Unencrypted) |
+|   **443** | HTTPS   | Secure Websites        |
+|  **3306** | MySQL   | Database Server        |

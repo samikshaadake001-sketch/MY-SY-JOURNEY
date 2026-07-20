@@ -1,0 +1,17 @@
+now commands:
+
+ipconfig:-it displays computers Your IP Address
+Default Gateway (usually your router)
+Subnet Mask
+
+
+IPv4 → Current standard you'll see most often.
+IPv6 → Newer version you'll learn more about later.
+Subnet Mask helps identify which devices belong to the same network.
+
+ping:-It checks whether another device is reachable over the network and measures how long it takes to get a reply.
+TTL stands for Time To Live.
+TTL prevents packets from looping endlessly on the internet.
+
+
+nslookup:its used directly to talk to DNS server
