@@ -70,3 +70,31 @@ ports:ip address tell the address of computer while port tell the address of par
 |    **80** | HTTP    | Websites (Unencrypted) |
 |   **443** | HTTPS   | Secure Websites        |
 |  **3306** | MySQL   | Database Server        |
+
+
+
+
+Reconnaissance:collecting information before attack
+two types are active and passive
+active recon:Directly interacting with the target's systems. ex.ping
+passive:Collect information without directly interacting with the target.ex.Searching Google
+
+WHOIS:WHOIS is a service that lets you find public information about a domain name.
+Why do ethical hackers use WHOIS?
+
+Before testing a system, they may want to know:
+
+Who owns the domain?
+When was it registered?
+Which DNS servers are being used?
+Which registrar manages it?
+whoise are generally passive
+
+ARP(address resolution protocol)
+
+
+"If I already have Google's IP, why does ARP find the router's MAC instead of Google's MAC?"
+
+Because ARP only works on your local network (LAN).
+
+Your laptop cannot directly reach Google's MAC address because Google is on another network, somewhere else on the Internet.

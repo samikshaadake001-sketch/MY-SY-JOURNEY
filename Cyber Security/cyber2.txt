@@ -15,3 +15,21 @@ TTL prevents packets from looping endlessly on the internet.
 
 
 nslookup:its used directly to talk to DNS server
+nslookup google.com
+like this command is used
+DNS Server = A computer that converts a domain name into an IP address.
+
+
+tracert:-(trace route)
+It shows every router (hop) your data passes through before reaching the destination.
+
+
+netstat(network statistic):-it is used for-
+🌐 Active network connections
+🚪 Open ports
+📡 Listening services
+📊 Network statistics
+
+netstat -b :-Show executable/program names (may require Command Prompt as Administrator)
+netstat -n:show ports numerically
+netstat -an:all listening ports and active connections
