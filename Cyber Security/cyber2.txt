@@ -33,3 +33,321 @@ netstat(network statistic):-it is used for-
 netstat -b :-Show executable/program names (may require Command Prompt as Administrator)
 netstat -n:show ports numerically
 netstat -an:all listening ports and active connections
+
+nmap 192.168.1.10:-it is baic nmap command
+
+nmap -sT 192.168.1.10
+nmap -sS 192.168.1.10
+nmap -sU 192.168.1.10
+
+
+nmap -sV 192.168.1.10
+-s = Scan
+V = Version Detection
+
+nmap -O 192.168.1.10:Operating System Detection
+means weather it is window,linux,mac
+OS Detection is not always 100% accurate.
+
+Why?
+
+Because:
+
+Firewalls can hide information.
+Some devices deliberately disguise themselves.
+Different OS versions can behave similarly.
+Network conditions can affect the results.
+
+So think of -O as a well-informed estimate, not a guaranteed answer.
+
+nmap -A 192.168.1.10:
+It combines:
+
+✅ OS Detection (-O)
+✅ Service Version Detection (-sV)
+✅ Default Nmap Scripts (NSE):Runs useful default security and information-gathering scripts
+✅ Traceroute
+
+
+Because it performs more probes than a basic scan.
+
+Compared to:
+
+nmap 192.168.1.10
+
+-A:
+
+Sends more packets.
+Takes longer to complete.
+Produces much more information.
+Is more likely to be noticed by intrusion detection systems (IDS) or logged by the target.
+
+nmap --script=http-title 192.168.1.10:Find website title
+nmap --script=ftp-anon 192.168.1.10:ananomous ftp login
+nmap --script=smb-os-discovery 192.168.1.10:NSE gathers additional information beyond a basic port scan.
+
+
+| Category      | Purpose                                   |
+| ------------- | ----------------------------------------- |
+| **safe**      | Safe information gathering                |
+| **default**   | Common scripts run in normal script scans |
+| **auth**      | Authentication-related checks             |
+| **discovery** | Collect information about the target      |
+| **version**   | Improve version detection                 |
+| **vuln**      | Check for known vulnerabilities           |
+NSE can be used for:
+
+✅ Information gathering
+
+✅ Security auditing
+
+✅ Checking for known vulnerabilities
+
+
+
+Commands to Remember
+
+Basic Scan
+
+nmap IP
+
+Version Detection
+
+nmap -sV IP
+
+OS Detection
+
+nmap -O IP
+
+Aggressive Scan
+
+nmap -A IP
+
+Run a Specific NSE Script
+
+nmap --script=http-title IP
+
+
+SMB = Server Message Block
+
+It is a protocol used mainly by Windows computers for:
+
+Sharing files
+Sharing folders
+Sharing printers
+
+
+nmap 192.168.1.10:Nmap scans its most common ports by default.
+
+But what if you only want to check port 80?
+
+That's where -p comes in.
+Scanning Multiple Ports
+
+Separate ports with commas.
+
+Scanning a Range of Ports
+
+Use a hyphen.
+
+Scan All Ports
+
+There are 65,535 TCP ports (numbered 1–65535).
+
+To scan all of them:
+
+nmap -p- 192.168.1.10
+
+Notice:
+
+-p-
+
+There is no number after the second -.
+
+It means:
+
+Scan every TCP port.
+
+| Command        | Purpose                   |
+| -------------- | ------------------------- |
+| `-p 80`        | Scan one port             |
+| `-p 22,80,443` | Scan selected ports       |
+| `-p 20-30`     | Scan a range              |
+| `-p-`          | Scan all 65,535 TCP ports |
+
+
+What does TCP guarantee?
+
+TCP provides:
+
+✅ Reliable delivery
+✅ Error checking
+✅ Packets arrive in the correct order
+✅ Lost packets are retransmitted
+
+| TCP                           | UDP                                                |
+| ----------------------------- | -------------------------------------------------- |
+| Reliable                      | Faster but less reliable                           |
+| Checks delivery               | Doesn't check delivery                             |
+| Retransmits lost packets      | Doesn't retransmit                                 |
+| Used for websites, SSH, email | Used for video calls, online games, streaming, DNS |
+
+
+Easy Memory Trick
+TCP
+
+📦 Courier with signature.
+
+The courier waits until you sign that you received the package.
+
+UDP
+
+🎤 Live radio announcement.
+
+The announcer keeps talking.
+
+If you miss one sentence, they don't stop and repeat it.
+| TCP                           | UDP                                                |
+| ----------------------------- | -------------------------------------------------- |
+| Reliable                      | Faster but less reliable                           |
+| Checks delivery               | Doesn't check delivery                             |
+| Retransmits lost packets      | Doesn't retransmit                                 |
+| Used for websites, SSH, email | Used for video calls, online games, streaming, DNS |
+
+
+| Command             | Purpose                   |
+| ------------------- | ------------------------- |
+| `nmap -sn IP`       | Is the host alive?        |
+| `nmap -p 80 IP`     | Scan only port 80         |
+| `nmap -p 22,443 IP` | Scan only SSH and HTTPS   |
+| `nmap -p 20-25 IP`  | Scan a range of ports     |
+| `nmap -p- IP`       | Scan all 65,535 TCP ports |
+
+
+| Command | You Should Remember               |
+| ------- | --------------------------------- |
+| `nmap`  | Basic Scan                        |
+| `-sT`   | TCP Connect Scan (Full Handshake) |
+| `-sS`   | SYN Scan (Half-Open Scan)         |
+| `-sU`   | UDP Scan                          |
+| `-sV`   | Service Version Detection         |
+| `-O`    | Operating System Detection        |
+| `-A`    | Aggressive Scan                   |
+| `-sn`   | Ping Scan (Host Discovery)        |
+| `-p`    | Scan Specific Ports               |
+
+
+-T0 (Paranoid)
+
+This is the slowest scan.
+
+Example:
+
+nmap -T0 192.168.1.10
+Why use it?
+
+If you're trying to avoid being noticed by security systems, scanning very slowly can make the traffic less obvious.
+
+-T1 (Sneaky)
+
+This is also slow, but a little faster than -T0.
+
+Example:
+
+nmap -T1 192.168.1.10
+
+It is still designed to be cautious, just not as extremely slow.
+
+
+-T2 (Polite)
+
+Command:
+
+nmap -T2 192.168.1.10
+Instead of sending scan requests rapidly, Nmap waits a little between packets.
+
+This reduces the load on the target system.
+When is it useful?
+When scanning older or slower systems.
+When you don't want to overload the network.
+
+
+
+-T3 (Normal)
+
+Command:
+
+nmap -T3 192.168.1.10
+What does it do?
+
+This is the default timing.
+Nmap already uses approximately -T3.
+
+It provides a good balance between:
+
+✅ Speed
+✅ Accuracy
+✅ Reliability
+
+| Timing | Name     | Speed         | Memory Trick                  |
+| ------ | -------- | ------------- | ----------------------------- |
+| `-T0`  | Paranoid | Very Slow     | "Don't let anyone notice me." |
+| `-T1`  | Sneaky   | Slow          | "Move quietly."               |
+| `-T2`  | Polite   | Moderate Slow | "Don't overload the target."  |
+| `-T3`  | Normal   | Default       | "Balanced speed."             |
+
+
+If you simply run:
+
+nmap 192.168.1.10
+
+Nmap already uses approximately -T3.
+
+
+-sS changes the scanning method.
+-T3 changes the scanning speed.
+
+
+-T4 (Aggressive)
+
+Command:
+
+nmap -T4 192.168.1.10
+t's commonly used on:
+
+Modern computers
+Fast networks
+Local Area Networks (LAN)
+
+
+-T5 (Insane)
+
+Command:
+
+nmap -T5 192.168.1.10
+What does it do?
+
+This is the fastest timing template.
+
+Nmap sends packets very quickly.
+
+But there's a catch!
+
+If the network is slow or busy:
+
+Some packets may be dropped.
+The target may not respond in time.
+Firewalls or intrusion detection systems may notice the rapid scan more easily.
+
+So faster isn't always better.
+
+| Option | Name       | Speed            | Best Used For                   |
+| ------ | ---------- | ---------------- | ------------------------------- |
+| `-T0`  | Paranoid   | 🐢 Very Slow     | Maximum stealth                 |
+| `-T1`  | Sneaky     | 🐌 Slow          | Careful scanning                |
+| `-T2`  | Polite     | 🙂 Moderate Slow | Avoid overloading systems       |
+| `-T3`  | Normal     | 🚗 Normal        | Default, balanced               |
+| `-T4`  | Aggressive | 🚀 Fast          | Modern systems & fast networks  |
+| `-T5`  | Insane     | ⚡ Very Fast      | Only when speed is the priority |
+
+

@@ -1,0 +1,236 @@
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select * employee_table
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee_table' at line 1
+mysql> select * employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> select *from emp_table;
+ERROR 1046 (3D000): No database selected
+mysql> SELECT * FROM emp_table;
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| employee           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.19 sec)
+
+mysql> select * from emp_table;
+ERROR 1046 (3D000): No database selected
+mysql> USE employee;
+Database changed
+mysql> SELECT * FROM emp_table;
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | Building_no | gender |
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+|    101 | Rahul    | 2023-01-15   | 45000.00 |      10 | HR        |           1 | Male   |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   |           2 | Female |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        |           3 | Male   |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        |           1 | Female |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        |           3 | Male   |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   |           2 | Female |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        |           3 | Male   |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        |           1 | Female |
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+8 rows in set (0.02 sec)
+
+mysql> update emp_table set set salary="50000" where Emp_ID="101";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'set salary="50000" where Emp_ID="101"' at line 1
+mysql> update emp_table set salary="50000" where Emp_ID="101";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * from emp_table;
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | Building_no | gender |
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        |           1 | Male   |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   |           2 | Female |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        |           3 | Male   |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        |           1 | Female |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        |           3 | Male   |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   |           2 | Female |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        |           3 | Male   |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        |           1 | Female |
++--------+----------+--------------+----------+---------+-----------+-------------+--------+
+8 rows in set (0.00 sec)
+
+mysql> alter table emp_table drop Building_no;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_table;
++--------+----------+--------------+----------+---------+-----------+--------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender |
++--------+----------+--------------+----------+---------+-----------+--------+
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |
++--------+----------+--------------+----------+---------+-----------+--------+
+8 rows in set (0.00 sec)
+
+mysql> alter table emp_table add column Building_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql>  alter table emp_table add column Building_no INT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp_table;
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender | Building_no |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |        NULL |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |        NULL |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |        NULL |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |        NULL |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |        NULL |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |        NULL |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |        NULL |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |        NULL |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> update emp_table set Building_no.="1" where Emp_ID="101";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '="1" where Emp_ID="101"' at line 1
+mysql> update emp_table set Building_no="1" where Emp_ID="101";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp_table set Building_no.="2" where Emp_ID="12";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '="2" where Emp_ID="12"' at line 1
+mysql> update emp_table set Building_no.="2" where Emp_ID="102";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '="2" where Emp_ID="102"' at line 1
+mysql> update emp_table set Building_no="2" where Emp_ID="102";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp_table set Building_no="3" where Emp_ID="103";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp_table set Building_no=1" where Emp_ID="104";
+    "> ;
+    "> update emp_table set Building_no=1" where Emp_ID="104";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '" where Emp_ID="104";
+;
+update emp_table set Building_no=1" where Emp_ID="104"' at line 1
+mysql>
+mysql> ;
+ERROR:
+No query specified
+
+mysql> update emp_table set Building_no=1" where Emp_ID="104"'
+    "> ;
+    "> update emp_table set Building_no=1" where Emp_ID="104";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '" where Emp_ID="104"'
+;
+update emp_table set Building_no=1" where Emp_ID="104"' at line 1
+mysql> select * from emp_table;
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender | Building_no |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |           1 |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |           2 |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |           3 |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |        NULL |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |        NULL |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |        NULL |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |        NULL |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |        NULL |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> update update emp_table set Building_no="1" where Emp_ID="104";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'update emp_table set Building_no="1" where Emp_ID="104"' at line 1
+mysql>  update emp_table set Building_no="1" where Emp_ID="104";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  update emp_table set Building_no="3" where Emp_ID="105";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  update emp_table set Building_no="2" where Emp_ID="106";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  update emp_table set Building_no="3" where Emp_ID="107";
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  update emp_table set Building_no="1" where Emp_ID="108";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp_table;
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender | Building_no |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |           1 |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |           2 |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |           3 |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |           1 |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |           3 |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |           2 |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |           3 |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |           1 |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from emp_table order by salary;
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender | Building_no |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |           1 |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |           1 |
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |           1 |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |           2 |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |           2 |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |           3 |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |           3 |
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |           3 |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from table_name order by salary desc;
+ERROR 1146 (42S02): Table 'employee.table_name' doesn't exist
+mysql> select * from emp_table order by salary desc;
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+| Emp_ID | Emp_Name | Joining_Date | Salary   | Dept_no | Dept_name | gender | Building_no |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+|    105 | Rohan    | 2023-07-18   | 70000.00 |      30 | IT        | Male   |           3 |
+|    107 | Vikram   | 2024-01-08   | 65000.00 |      30 | IT        | Male   |           3 |
+|    103 | Amit     | 2024-02-10   | 60000.00 |      30 | IT        | Male   |           3 |
+|    106 | Priya    | 2022-08-20   | 55000.00 |      20 | Finance   | Female |           2 |
+|    102 | Anjali   | 2022-05-12   | 52000.00 |      20 | Finance   | Female |           2 |
+|    101 | Rahul    | 2023-01-15   | 50000.00 |      10 | HR        | Male   |           1 |
+|    104 | Sneha    | 2021-11-05   | 48000.00 |      10 | HR        | Female |           1 |
+|    108 | Neha     | 2023-09-25   | 47000.00 |      10 | HR        | Female |           1 |
++--------+----------+--------------+----------+---------+-----------+--------+-------------+
+8 rows in set (0.00 sec)
+
+mysql>

@@ -98,3 +98,71 @@ ARP(address resolution protocol)
 Because ARP only works on your local network (LAN).
 
 Your laptop cannot directly reach Google's MAC address because Google is on another network, somewhere else on the Internet.
+
+
+
+port scanning:its the process of discovering which port is open or close or filtered
+
+Why Do We Scan Ports?
+👨‍💻 Security Engineers
+
+They scan their own systems to:
+
+Find unnecessary open ports.
+Verify that required services are running.
+Reduce the attack surface by closing unused services.
+⚠️ Attackers
+
+Attackers may scan systems to identify exposed services that could have vulnerabilities.
+
+The scan itself doesn't "hack" a system—it gathers information. Unauthorized scanning, however, may violate laws or organizational policies, so it should only be done on systems you own or have permission to test.
+
+
+
+What is Nmap?
+
+Nmap stands for Network Mapper.
+
+It is one of the most widely used tools for:
+
+Discovering devices on a network
+Finding open ports
+Identifying running services
+Gathering information during authorized security assessments
+
+types of nmap
+TCP Connect Scan (-sT):A TCP Connect Scan completes this entire handshake to determine whether the port is open.
+Advantages
+✔ Reliable
+✔ Works without special privileges on many systems
+Disadvantages
+❌ Easier to detect because it establishes a full TCP connection.
+SYN Scan (-sS):After receiving the SYN-ACK, the scanner sends an RST (Reset) packet instead of the final ACK.
+dvantages
+✔ Faster than a full TCP Connect Scan.
+✔ Often generates less application-level activity because it doesn't complete the TCP connection.
+UDP Scan (-sU):UDP has no handshake.
+
+
+Nmap scripting English(NPE):
+ 
+Common UDP services include:
+
+DNS (53)
+DHCP (67/68)
+SNMP (161)
+
+
+
+latency:its the time for data travel between my computer and target
+
+Telnet transmits data without encryption, so organizations generally prefer SSH (Port 22) for secure remote login.
+
+
+
+
+RST stands for:
+
+Reset
+
+It is a TCP flag used to immediately terminate or reject a connection.
