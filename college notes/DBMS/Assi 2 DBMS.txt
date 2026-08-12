@@ -1,0 +1,557 @@
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> CREATE DATABASE hospital_assignment;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> USE hospital_assignment;
+Database changed
+mysql> CREATE TABLE patient (
+    ->     Patient_ID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     Full_Name VARCHAR(100) NOT NULL,
+    ->     Date_of_Birth DATE NOT NULL,
+    ->     Gender VARCHAR(10) NOT NULL,
+    ->     Phone_Number VARCHAR(15) NOT NULL UNIQUE,
+    ->     Address VARCHAR(100) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> DESC patient;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| Patient_ID    | int          | NO   | PRI | NULL    | auto_increment |
+| Full_Name     | varchar(100) | NO   |     | NULL    |                |
+| Date_of_Birth | date         | NO   |     | NULL    |                |
+| Gender        | varchar(10)  | NO   |     | NULL    |                |
+| Phone_Number  | varchar(15)  | NO   | UNI | NULL    |                |
+| Address       | varchar(100) | NO   |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+6 rows in set (0.06 sec)
+
+mysql> CREATE TABLE doctor (
+    ->     Doctor_ID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     Full_Name VARCHAR(100) NOT NULL,
+    ->     Specialization VARCHAR(50) NOT NULL,
+    ->     Phone_Number VARCHAR(15) NOT NULL UNIQUE,
+    ->     Treatment_Cost DECIMAL(10,2) NOT NULL,
+    ->     Department VARCHAR(50) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC doctor;
++----------------+---------------+------+-----+---------+----------------+
+| Field          | Type          | Null | Key | Default | Extra          |
++----------------+---------------+------+-----+---------+----------------+
+| Doctor_ID      | int           | NO   | PRI | NULL    | auto_increment |
+| Full_Name      | varchar(100)  | NO   |     | NULL    |                |
+| Specialization | varchar(50)   | NO   |     | NULL    |                |
+| Phone_Number   | varchar(15)   | NO   | UNI | NULL    |                |
+| Treatment_Cost | decimal(10,2) | NO   |     | NULL    |                |
+| Department     | varchar(50)   | NO   |     | NULL    |                |
++----------------+---------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> CREATE TABLE appointment (
+    ->     Appointment_ID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     Patient_ID INT NOT NULL,
+    ->     Doctor_ID INT NOT NULL,
+    ->     Appointment_DateTime DATETIME NOT NULL,
+    ->     Status VARCHAR(20) NOT NULL,
+    ->     FOREIGN KEY (Patient_ID) REFERENCES patient(Patient_ID),
+    ->     FOREIGN KEY (Doctor_ID) REFERENCES doctor(Doctor_ID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC appointment;
++----------------------+-------------+------+-----+---------+----------------+
+| Field                | Type        | Null | Key | Default | Extra          |
++----------------------+-------------+------+-----+---------+----------------+
+| Appointment_ID       | int         | NO   | PRI | NULL    | auto_increment |
+| Patient_ID           | int         | NO   | MUL | NULL    |                |
+| Doctor_ID            | int         | NO   | MUL | NULL    |                |
+| Appointment_DateTime | datetime    | NO   |     | NULL    |                |
+| Status               | varchar(20) | NO   |     | NULL    |                |
++----------------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO patient (Full_Name, Date_of_Birth, Gender, Phone_Number, Address)
+    -> VALUES
+    -> ('Rahul Sharma','2001-05-15','Male','9876543210','Pune'),
+    -> ('Priya Patil','1994-08-22','Female','9876501234','Mumbai'),
+    -> ('Amit Kumar','1979-02-10','Male','9876512345','Kolhapur'),
+    -> ('Sneha Joshi','1996-11-05','Female','9876523456','Satara'),
+    -> ('Rohan Desai','1987-07-18','Male','9876534567','Sangli'),
+    -> ('Anjali Kulkarni','1998-03-25','Female','9876545678','Nashik'),
+    -> ('Vikram Singh','1974-09-14','Male','9876556789','Nagpur'),
+    -> ('Neha Verma','1991-12-30','Female','9876567890','Solapur'),
+    -> ('Karan Mehta','1984-04-08','Male','9876578901','Aurangabad'),
+    -> ('Pooja More','1993-10-12','Female','9876589012','Ahmednagar');
+Query OK, 10 rows affected (0.03 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM patient;
++------------+-----------------+---------------+--------+--------------+------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    |
++------------+-----------------+---------------+--------+--------------+------------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9876543210   | Pune       |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 9876545678   | Nashik     |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |
+|          9 | Karan Mehta     | 1984-04-08    | Male   | 9876578901   | Aurangabad |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |
++------------+-----------------+---------------+--------+--------------+------------+
+10 rows in set (0.01 sec)
+
+mysql> INSERT INTO doctor (Full_Name, Specialization, Phone_Number, Treatment_Cost, Department)
+    -> VALUES
+    -> ('Dr. Sharma','Cardiology','9876600001',5000.00,'Heart'),
+    -> ('Dr. Mehta','Orthopedic','9876600002',3500.00,'Bone'),
+    -> ('Dr. Patil','Neurology','9876600003',6500.00,'Brain'),
+    -> ('Dr. Joshi','Dermatology','9876600004',2500.00,'Skin'),
+    -> ('Dr. Kulkarni','Cardiology','9876600005',5500.00,'Heart'),
+    -> ('Dr. Deshmukh','Pediatrics','9876600006',3000.00,'Children'),
+    -> ('Dr. Shah','ENT','9876600007',2800.00,'ENT'),
+    -> ('Dr. Reddy','General Medicine','9876600008',2000.00,'Medicine');
+Query OK, 8 rows affected (0.01 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM doctor;
++-----------+--------------+------------------+--------------+----------------+------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Department |
++-----------+--------------+------------------+--------------+----------------+------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 | Heart      |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | Bone       |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | Brain      |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | Skin       |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 | Heart      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | Children   |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2800.00 | ENT        |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | Medicine   |
++-----------+--------------+------------------+--------------+----------------+------------+
+8 rows in set (0.01 sec)
+
+mysql> INSERT INTO appointment (Patient_ID, Doctor_ID, Appointment_DateTime, Status)
+    -> VALUES
+    -> (1,1,'2026-08-02 09:00:00','Scheduled'),
+    -> (2,2,'2026-08-02 10:00:00','Completed'),
+    -> (3,3,'2026-08-03 11:00:00','Scheduled'),
+    -> (4,4,'2026-08-03 12:00:00','Cancelled'),
+    -> (5,5,'2026-08-04 09:30:00','Scheduled'),
+    -> (6,6,'2026-08-04 10:30:00','Completed'),
+    -> (7,7,'2026-08-05 11:30:00','Scheduled'),
+    -> (8,8,'2026-08-05 12:30:00','Cancelled'),
+    -> (9,1,'2026-08-06 09:15:00','Scheduled'),
+    -> (10,2,'2026-08-06 10:15:00','Scheduled');
+Query OK, 10 rows affected (0.02 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM appointment;
++----------------+------------+-----------+----------------------+-----------+
+| Appointment_ID | Patient_ID | Doctor_ID | Appointment_DateTime | Status    |
++----------------+------------+-----------+----------------------+-----------+
+|              1 |          1 |         1 | 2026-08-02 09:00:00  | Scheduled |
+|              2 |          2 |         2 | 2026-08-02 10:00:00  | Completed |
+|              3 |          3 |         3 | 2026-08-03 11:00:00  | Scheduled |
+|              4 |          4 |         4 | 2026-08-03 12:00:00  | Cancelled |
+|              5 |          5 |         5 | 2026-08-04 09:30:00  | Scheduled |
+|              6 |          6 |         6 | 2026-08-04 10:30:00  | Completed |
+|              7 |          7 |         7 | 2026-08-05 11:30:00  | Scheduled |
+|              8 |          8 |         8 | 2026-08-05 12:30:00  | Cancelled |
+|              9 |          9 |         1 | 2026-08-06 09:15:00  | Scheduled |
+|             10 |         10 |         2 | 2026-08-06 10:15:00  | Scheduled |
++----------------+------------+-----------+----------------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> DELETE FROM appointment
+    -> WHERE Patient_ID = 9;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> DELETE FROM patient
+    -> WHERE Patient_ID = 9;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM patient;
++------------+-----------------+---------------+--------+--------------+------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    |
++------------+-----------------+---------------+--------+--------------+------------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9876543210   | Pune       |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 9876545678   | Nashik     |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |
++------------+-----------------+---------------+--------+--------------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from patient order by age desc;
+ERROR 1054 (42S22): Unknown column 'age' in 'order clause'
+mysql> ALTER TABLE patient
+    -> ADD Age INT;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> UPDATE patient
+    -> SET Age = TIMESTAMPDIFF(YEAR, Date_of_Birth, CURDATE());
+Query OK, 9 rows affected (0.01 sec)
+Rows matched: 9  Changed: 9  Warnings: 0
+
+mysql> SELECT *
+    -> FROM patient
+    -> ORDER BY Age DESC;
++------------+-----------------+---------------+--------+--------------+------------+------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  |
++------------+-----------------+---------------+--------+--------------+------------+------+
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 9876545678   | Nashik     |   28 |
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9876543210   | Pune       |   25 |
++------------+-----------------+---------------+--------+--------------+------------+------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM doctor
+    -> ORDER BY Treatment_Cost DESC;
++-----------+--------------+------------------+--------------+----------------+------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Department |
++-----------+--------------+------------------+--------------+----------------+------------+
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | Brain      |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 | Heart      |
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 | Heart      |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | Bone       |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | Children   |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2800.00 | ENT        |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | Skin       |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | Medicine   |
++-----------+--------------+------------------+--------------+----------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> update patient set Phone_Number="9999999999" where Patient_ID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from patient;
++------------+-----------------+---------------+--------+--------------+------------+------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  |
++------------+-----------------+---------------+--------+--------------+------------+------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 9876545678   | Nashik     |   28 |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 |
++------------+-----------------+---------------+--------+--------------+------------+------+
+9 rows in set (0.00 sec)
+
+mysql> ALTER TABLE doctor
+    -> DROP COLUMN Doctor_ID;
+ERROR 1829 (HY000): Cannot drop column 'Doctor_ID': needed in a foreign key constraint 'appointment_ibfk_2' of table 'appointment'
+mysql> ALTER TABLE doctor
+    -> DROP COLUMN Department;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from doctor;
++-----------+--------------+------------------+--------------+----------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost |
++-----------+--------------+------------------+--------------+----------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2800.00 |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 |
++-----------+--------------+------------------+--------------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> update patient set Address='Nagpur',Phone_Number='8888888888' where Patient_ID=6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from patient
+    -> ;
++------------+-----------------+---------------+--------+--------------+------------+------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  |
++------------+-----------------+---------------+--------+--------------+------------+------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 |
++------------+-----------------+---------------+--------+--------------+------------+------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE doctor
+    -> SET Treatment_Cost = Treatment_Cost + 100
+    -> WHERE Specialization='ENT';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from doctor;
++-----------+--------------+------------------+--------------+----------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost |
++-----------+--------------+------------------+--------------+----------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 |
++-----------+--------------+------------------+--------------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE patient
+    -> ADD Admission_Date DATE;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-01' WHERE Patient_ID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-03' WHERE Patient_ID=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-05' WHERE Patient_ID=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-08' WHERE Patient_ID=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-10' WHERE Patient_ID=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-12' WHERE Patient_ID=6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-15' WHERE Patient_ID=7;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-18' WHERE Patient_ID=8;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-20' WHERE Patient_ID=9;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> UPDATE patient SET Admission_Date='2026-07-22' WHERE Patient_ID=10;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM patient;
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 | 2026-07-01     |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 | 2026-07-05     |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 | 2026-07-08     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 | 2026-07-12     |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 | 2026-07-15     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> alter table doctor add Visiting_Time TIME;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='09:00:00' WHERE Doctor_ID=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='09:30:00' WHERE Doctor_ID=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='10:00:00' WHERE Doctor_ID=3;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='10:30:00' WHERE Doctor_ID=4;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='11:00:00' WHERE Doctor_ID=5;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='11:30:00' WHERE Doctor_ID=6;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='12:00:00' WHERE Doctor_ID=7;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE doctor SET Visiting_Time='12:30:00' WHERE Doctor_ID=8;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from doctor;
++-----------+--------------+------------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+--------------+------------------+--------------+----------------+---------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 | 09:00:00      |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | 09:30:00      |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | 10:00:00      |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | 10:30:00      |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 | 11:00:00      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | 11:30:00      |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 | 12:00:00      |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | 12:30:00      |
++-----------+--------------+------------------+--------------+----------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> ALTER TABLE patient
+    -> MODIFY Phone_Number VARCHAR(20);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from patient;
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 | 2026-07-01     |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 | 2026-07-05     |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 | 2026-07-08     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 | 2026-07-12     |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 | 2026-07-15     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+9 rows in set (0.00 sec)
+
+mysql>
+mysql> select from patient where age>30;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from patient where age>30' at line 1
+mysql> select * from patient where age>30;
++------------+--------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name    | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+--------------+---------------+--------+--------------+------------+------+----------------+
+|          2 | Priya Patil  | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          3 | Amit Kumar   | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 | 2026-07-05     |
+|          5 | Rohan Desai  | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          7 | Vikram Singh | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 | 2026-07-15     |
+|          8 | Neha Verma   | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More   | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
++------------+--------------+---------------+--------+--------------+------------+------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select Full_Name from doctor where Treatment_Cost >2000;
++--------------+
+| Full_Name    |
++--------------+
+| Dr. Sharma   |
+| Dr. Mehta    |
+| Dr. Patil    |
+| Dr. Joshi    |
+| Dr. Kulkarni |
+| Dr. Deshmukh |
+| Dr. Shah     |
++--------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT COUNT(*) AS Total_Patients
+    -> FROM patient;
++----------------+
+| Total_Patients |
++----------------+
+|              9 |
++----------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT MAX(Treatment_Cost) AS Maximum_Treatment_Cost
+    -> FROM doctor;
++------------------------+
+| Maximum_Treatment_Cost |
++------------------------+
+|                6500.00 |
++------------------------+
+1 row in set (0.01 sec)
+
+mysql> select * from patient order by age desc;
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 | 2026-07-15     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 | 2026-07-05     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 | 2026-07-08     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 | 2026-07-12     |
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 | 2026-07-01     |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> UPDATE appointment
+    -> SET Status='Completed'
+    -> WHERE Appointment_ID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>
+mysql> SELECT * FROM appointment;
++----------------+------------+-----------+----------------------+-----------+
+| Appointment_ID | Patient_ID | Doctor_ID | Appointment_DateTime | Status    |
++----------------+------------+-----------+----------------------+-----------+
+|              1 |          1 |         1 | 2026-08-02 09:00:00  | Completed |
+|              2 |          2 |         2 | 2026-08-02 10:00:00  | Completed |
+|              3 |          3 |         3 | 2026-08-03 11:00:00  | Scheduled |
+|              4 |          4 |         4 | 2026-08-03 12:00:00  | Cancelled |
+|              5 |          5 |         5 | 2026-08-04 09:30:00  | Scheduled |
+|              6 |          6 |         6 | 2026-08-04 10:30:00  | Completed |
+|              7 |          7 |         7 | 2026-08-05 11:30:00  | Scheduled |
+|              8 |          8 |         8 | 2026-08-05 12:30:00  | Cancelled |
+|             10 |         10 |         2 | 2026-08-06 10:15:00  | Scheduled |
++----------------+------------+-----------+----------------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql>

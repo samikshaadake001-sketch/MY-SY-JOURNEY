@@ -1,0 +1,194 @@
+Enter password: *************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE hospital_assignment;
+Database changed
+mysql> select * from patient where gender="male";
++------------+--------------+---------------+--------+--------------+----------+------+----------------+
+| Patient_ID | Full_Name    | Date_of_Birth | Gender | Phone_Number | Address  | Age  | Admission_Date |
++------------+--------------+---------------+--------+--------------+----------+------+----------------+
+|          1 | Rahul Sharma | 2001-05-15    | Male   | 9999999999   | Pune     |   25 | 2026-07-01     |
+|          3 | Amit Kumar   | 1979-02-10    | Male   | 9876512345   | Kolhapur |   47 | 2026-07-05     |
+|          5 | Rohan Desai  | 1987-07-18    | Male   | 9876534567   | Sangli   |   39 | 2026-07-10     |
+|          7 | Vikram Singh | 1974-09-14    | Male   | 9876556789   | Nagpur   |   51 | 2026-07-15     |
++------------+--------------+---------------+--------+--------------+----------+------+----------------+
+4 rows in set (0.08 sec)
+
+mysql> select * from appointment where Appointment_DateTime >= '2025-01-01';
++----------------+------------+-----------+----------------------+-----------+
+| Appointment_ID | Patient_ID | Doctor_ID | Appointment_DateTime | Status    |
++----------------+------------+-----------+----------------------+-----------+
+|              1 |          1 |         1 | 2026-08-02 09:00:00  | Completed |
+|              2 |          2 |         2 | 2026-08-02 10:00:00  | Completed |
+|              3 |          3 |         3 | 2026-08-03 11:00:00  | Scheduled |
+|              4 |          4 |         4 | 2026-08-03 12:00:00  | Cancelled |
+|              5 |          5 |         5 | 2026-08-04 09:30:00  | Scheduled |
+|              6 |          6 |         6 | 2026-08-04 10:30:00  | Completed |
+|              7 |          7 |         7 | 2026-08-05 11:30:00  | Scheduled |
+|              8 |          8 |         8 | 2026-08-05 12:30:00  | Cancelled |
+|             10 |         10 |         2 | 2026-08-06 10:15:00  | Scheduled |
++----------------+------------+-----------+----------------------+-----------+
+9 rows in set (0.01 sec)
+
+mysql> select * from patient where Gender='female' and Address='pune' and Phone_Number IS NOT NULL;
+Empty set (0.02 sec)
+
+mysql> select * from patient where Address='mumbai' OR Address='pune';
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+| Patient_ID | Full_Name    | Date_of_Birth | Gender | Phone_Number | Address | Age  | Admission_Date |
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+|          1 | Rahul Sharma | 2001-05-15    | Male   | 9999999999   | Pune    |   25 | 2026-07-01     |
+|          2 | Priya Patil  | 1994-08-22    | Female | 9876501234   | Mumbai  |   31 | 2026-07-03     |
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from doctor where Specialization IS NOT cardiologist;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cardiologist' at line 1
+mysql> SELECT * FROM doctor
+    -> WHERE NOT Specialization='Cardiology';
++-----------+--------------+------------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+--------------+------------------+--------------+----------------+---------------+
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | 09:30:00      |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | 10:00:00      |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | 10:30:00      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | 11:30:00      |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 | 12:00:00      |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | 12:30:00      |
++-----------+--------------+------------------+--------------+----------------+---------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from patient where Full_Name like 'A%';
++------------+-----------------+---------------+--------+--------------+----------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address  | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+----------+------+----------------+
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur |   47 | 2026-07-05     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur   |   28 | 2026-07-12     |
++------------+-----------------+---------------+--------+--------------+----------+------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from doctor WHERE Specialization LIKE '%Neuro%';
++-----------+-----------+----------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name | Specialization | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+-----------+----------------+--------------+----------------+---------------+
+|         3 | Dr. Patil | Neurology      | 9876600003   |        6500.00 | 10:00:00      |
++-----------+-----------+----------------+--------------+----------------+---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM patient
+    -> WHERE Address NOT LIKE '%Maharashtra%';
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+|          1 | Rahul Sharma    | 2001-05-15    | Male   | 9999999999   | Pune       |   25 | 2026-07-01     |
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          3 | Amit Kumar      | 1979-02-10    | Male   | 9876512345   | Kolhapur   |   47 | 2026-07-05     |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 | 2026-07-08     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 | 2026-07-12     |
+|          7 | Vikram Singh    | 1974-09-14    | Male   | 9876556789   | Nagpur     |   51 | 2026-07-15     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from patient where Address='Pune';
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+| Patient_ID | Full_Name    | Date_of_Birth | Gender | Phone_Number | Address | Age  | Admission_Date |
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+|          1 | Rahul Sharma | 2001-05-15    | Male   | 9999999999   | Pune    |   25 | 2026-07-01     |
++------------+--------------+---------------+--------+--------------+---------+------+----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM doctor
+    -> WHERE Specialization NOT IN ('Cardiology','Dermatology');
++-----------+--------------+------------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+--------------+------------------+--------------+----------------+---------------+
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | 09:30:00      |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | 10:00:00      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | 11:30:00      |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 | 12:00:00      |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | 12:30:00      |
++-----------+--------------+------------------+--------------+----------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from patient where Date_of_Birth BETWEEN 1980-01-01 AND 2000-12-31;
+Empty set, 2 warnings (0.01 sec)
+
+mysql> SELECT * FROM patient
+    -> WHERE Date_of_Birth
+    -> BETWEEN '1980-01-01' AND '2000-12-31';
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+| Patient_ID | Full_Name       | Date_of_Birth | Gender | Phone_Number | Address    | Age  | Admission_Date |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+|          2 | Priya Patil     | 1994-08-22    | Female | 9876501234   | Mumbai     |   31 | 2026-07-03     |
+|          4 | Sneha Joshi     | 1996-11-05    | Female | 9876523456   | Satara     |   29 | 2026-07-08     |
+|          5 | Rohan Desai     | 1987-07-18    | Male   | 9876534567   | Sangli     |   39 | 2026-07-10     |
+|          6 | Anjali Kulkarni | 1998-03-25    | Female | 8888888888   | Nagpur     |   28 | 2026-07-12     |
+|          8 | Neha Verma      | 1991-12-30    | Female | 9876567890   | Solapur    |   34 | 2026-07-18     |
+|         10 | Pooja More      | 1993-10-12    | Female | 9876589012   | Ahmednagar |   32 | 2026-07-22     |
++------------+-----------------+---------------+--------+--------------+------------+------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> select * from patient where Phone_Number is NULL;
+Empty set (0.02 sec)
+
+mysql> select * from doctor where Phone_Number is not NULL;
++-----------+--------------+------------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+--------------+------------------+--------------+----------------+---------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 | 09:00:00      |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | 09:30:00      |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | 10:00:00      |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | 10:30:00      |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 | 11:00:00      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | 11:30:00      |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 | 12:00:00      |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | 12:30:00      |
++-----------+--------------+------------------+--------------+----------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from doctor order by Full_Name DESC;
++-----------+--------------+------------------+--------------+----------------+---------------+
+| Doctor_ID | Full_Name    | Specialization   | Phone_Number | Treatment_Cost | Visiting_Time |
++-----------+--------------+------------------+--------------+----------------+---------------+
+|         1 | Dr. Sharma   | Cardiology       | 9876600001   |        5000.00 | 09:00:00      |
+|         7 | Dr. Shah     | ENT              | 9876600007   |        2900.00 | 12:00:00      |
+|         8 | Dr. Reddy    | General Medicine | 9876600008   |        2000.00 | 12:30:00      |
+|         3 | Dr. Patil    | Neurology        | 9876600003   |        6500.00 | 10:00:00      |
+|         2 | Dr. Mehta    | Orthopedic       | 9876600002   |        3500.00 | 09:30:00      |
+|         5 | Dr. Kulkarni | Cardiology       | 9876600005   |        5500.00 | 11:00:00      |
+|         4 | Dr. Joshi    | Dermatology      | 9876600004   |        2500.00 | 10:30:00      |
+|         6 | Dr. Deshmukh | Pediatrics       | 9876600006   |        3000.00 | 11:30:00      |
++-----------+--------------+------------------+--------------+----------------+---------------+
+8 rows in set (0.02 sec)
+
+mysql> SELECT Doctor_ID, COUNT(*) AS Total_Appointments
+    -> FROM appointment
+    -> GROUP BY Doctor_ID
+    -> HAVING COUNT(*) > 5;
+Empty set (0.02 sec)
+
+mysql> SELECT
+    -> MIN(Appointment_DateTime) AS Earliest_Appointment,
+    -> MAX(Appointment_DateTime) AS Latest_Appointment
+    -> FROM appointment;
++----------------------+---------------------+
+| Earliest_Appointment | Latest_Appointment  |
++----------------------+---------------------+
+| 2026-08-02 09:00:00  | 2026-08-06 10:15:00 |
++----------------------+---------------------+
+1 row in set (0.01 sec)
+
+mysql>

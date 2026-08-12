@@ -166,3 +166,99 @@ RST stands for:
 Reset
 
 It is a TCP flag used to immediately terminate or reject a connection.
+
+
+What is NSE?
+
+NSE = Nmap Scripting Engine
+Why use NSE?
+
+NSE automates common security checks.
+
+Safe Scripts (safe)
+
+These scripts are designed to gather information without causing disruption.
+
+
+Discovery Scripts (discovery)
+
+Purpose:
+
+👉 Find more information about the target.
+
+
+
+What is Wireshark?
+
+Wireshark is a network packet analyzer.
+
+In simple words:
+
+It lets you capture and inspect network packets travelling through a network interface.
+| Information | Meaning                    |
+| ----------- | -------------------------- |
+| Source      | Where the packet came from |
+| Destination | Where the packet is going  |
+| Protocol    | TCP, UDP, DNS, HTTP, etc.  |
+| Length      | Size of the packet         |
+| Time        | When it was captured       |
+
+
+
+Packet
+  ↓
+Ethernet
+  ↓
+IP
+  ↓
+TCP / UDP
+  ↓
+Application data
+
+1️⃣ Ethernet
+
+Deals with local network communication and contains things such as MAC addresses.
+
+2️⃣ IP
+
+Tells us about source IP and destination IP.
+
+Example:
+
+Source IP      → 192.168.1.5
+Destination IP → 142.x.x.x
+3️⃣ TCP / UDP
+
+This tells us which transport protocol is being used.
+
+For TCP, you'll encounter things you've already learned:
+
+SYN
+SYN-ACK
+ACK
+RST
+4️⃣ Application layer
+
+This is where protocols such as:
+
+HTTP
+DNS
+SSH
+
+can appear.
+
+🧠 Think of it like an envelope 📦
+Ethernet → Local delivery information
+IP       → Where it's going
+TCP/UDP  → How transport happens
+Data     → Actual application information
+
+
+
+we can aplly filter to wireshark to find specific packets
+ex.TCP,DNS,UDP
+
+we can combine conditions using "and" 
+ex.tcp and ip.addr == 192.168.1.5  this  shows tcp packets involving this ip address
+
+

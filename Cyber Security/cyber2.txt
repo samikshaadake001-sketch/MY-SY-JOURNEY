@@ -351,3 +351,105 @@ So faster isn't always better.
 | `-T5`  | Insane     | ⚡ Very Fast      | Only when speed is the priority |
 
 
+
+nmap --script <script-name> <IP>
+nmap --script ftp-anon 192.168.1.10
+
+This checks whether an FTP server allows anonymous login.
+
+
+
+If it does, that's often a security concern.
+
+
+
+nmap --script safe 192.168.1.10
+
+Think of them as asking polite questions.
+
+nmap --script discovery 192.168.1.10
+
+These scripts may discover:
+
+Host information
+Available services
+Network details
+
+Vulnerability Scripts (vuln)
+
+Purpose:
+
+👉 Check for known security vulnerabilities.
+
+
+nmap --script vuln 192.168.1.10
+
+These scripts look for known weaknesses.
+
+nmap --script http-headers 192.168.1.10
+What does it do?
+
+It displays the HTTP headers sent by the web server.
+
+Example output:
+
+Server: Apache
+Content-Type: text/html
+Date: Wed, 06 Aug 2026
+
+nmap --script ssl-cert 192.168.1.10
+What does it do?
+
+It displays information about the website's SSL/TLS certificate.
+
+
+
+ssh-hostkey
+
+Command:
+
+nmap --script ssh-hostkey 192.168.1.10
+What does it do?
+
+It displays information about the SSH host key.
+
+Why is it useful?
+
+It helps identify the SSH server and its public key.
+
+
+banner
+
+Command:
+
+nmap --script banner 192.168.1.10
+What does it do?
+
+It tries to read the banner sent by a service.
+
+Example:
+
+80/tcp open http
+
+Apache/2.4.58 Ubuntu
+Why is it useful?
+
+Many services send a welcome message (banner) when someone connects.
+
+That banner often tells us:
+
+Software name
+Version
+Sometimes the operating system
+
+
+
+| Script         | Purpose                |
+| -------------- | ---------------------- |
+| `http-title`   | Web page title         |
+| `http-headers` | HTTP headers           |
+| `ssl-cert`     | SSL certificate        |
+| `ftp-anon`     | Anonymous FTP login    |
+| `ssh-hostkey`  | SSH host key           |
+| `banner`       | Service banner/version |
+
